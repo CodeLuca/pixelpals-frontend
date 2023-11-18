@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useContractRead } from 'wagmi';
 import { abis, ca } from '../web3/constants/contants';
 
-const ExploreScreen = () => {
+const ExploreScreen = ({ navigation }) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [nfts, setNfts] = useState([
@@ -61,11 +61,17 @@ const ExploreScreen = () => {
           coordinate={{ latitude: Number(random_locations[2*index])/100000, longitude: Number(random_locations[(2*index)+1])/100000 }}
           title={nft.name}
         >
+          <Image source={{ uri: "https://placekitten.com/200/200" }} style={styles.markerImage} />
           <Callout>
             <View style={styles.calloutView}>
               <Image source={{ uri: nft.imageUrl }} style={styles.nftImage} />
-              <Text>{nft.name}</Text>
-              <Text>Rarity: {nft.rarity}</Text>
+              <View style={{ flex: 1, padding: 10 }}>
+                <Text style={styles.nftName}>{nft.name}</Text>
+                <Text style={styles.nftRarity}>Rarity: {nft.rarity}</Text>
+                <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("Battle")}>
+                  <Text style={styles.buttonText}>Battle</Text>
+                </TouchableOpacity>
+              </View>
               {/* Add distance calculation if needed */}
             </View>
           </Callout>
@@ -80,15 +86,44 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
+  markerImage: {
+    width: 60, // Set the size of the image
+    height: 60,
+    borderRadius: 60,
+    borderColor: "black",
+    borderWidth: 3
+  },
+  nftName: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  nftRarity: {
+    fontSize: 14,
+    color: 'gray',
+    marginBottom: 10,
+  },
   calloutView: {
-    width: 200,
-    height: 100,
-    justifyContent: 'center',
-    alignItems: 'center',
+    flex: 1,
+    flexDirection: "row",
+    width: 250,
+    height: 110,
+    padding: 3
   },
   nftImage: {
-    width: 50,
-    height: 50,
+    marginBottom: 5,
+    marginRight: 5,
+    width: 100,
+    height: 100,
+  },
+  marketplaceButton: {
+    backgroundColor: '#4e9af1',
+    padding: 5,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 14,
+    textAlign: 'center',
   },
 });
 
