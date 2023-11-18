@@ -1,14 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { useWeb3Modal } from '@web3modal/wagmi-react-native';
 
 const WelcomeScreen = ({ navigation }) => {
+  const { open } = useWeb3Modal();
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to PixelPals</Text>
       <Text style={styles.subtitle}>Your Adventure Awaits</Text>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => { /* MetaMask connection logic here */ }}>
+        onPress={() => { open() }}>
         <Text style={styles.buttonText}>Connect your Wallet</Text>
       </TouchableOpacity>
     </View>

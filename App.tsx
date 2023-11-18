@@ -62,13 +62,17 @@ function MyTabs() {
 
 function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
-        <Stack.Screen name="ListOnMarketPlace" component={ListOnMarketplace} options={{ title: "", headerBackTitle: "Profile" }} />
-        {/* ... other non-tab screens */}
-      </Stack.Navigator>
-    </NavigationContainer>
+
+    <WagmiConfig config={wagmiConfig}>
+      <Web3Modal />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
+          <Stack.Screen name="ListOnMarketPlace" component={ListOnMarketplace} options={{ title: "", headerBackTitle: "Profile" }} />
+          {/* ... other non-tab screens */}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </WagmiConfig>
   );
 }
 
