@@ -3,6 +3,7 @@
 import '@walletconnect/react-native-compat';
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { useAccount } from 'wagmi';
 import {
   createWeb3Modal,
   defaultWagmiConfig,
@@ -10,7 +11,6 @@ import {
 } from '@web3modal/wagmi-react-native';
 import { WagmiConfig } from 'wagmi';
 import { mainnet, polygon, arbitrum, polygonMumbai, baseGoerli } from 'wagmi/chains';
-import HomePage from './src/pages/HomePage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -19,6 +19,9 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import Explore from './src/screens/Explore';
 import Marketplace from './src/screens/Marketplace';
 import ListOnMarketplace from './src/screens/ListOnMarketplace';
+import Battle from './src/screens/Battle';
+import YouWon from './src/screens/YouWon';
+import YouLost from './src/screens/YouLost';
 
 
 const projectId = process.env.EXPO_PUBLIC_WALLETCONNECT_CLOUD_PROJECT_ID;
@@ -53,10 +56,13 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
+  const { address } = useAccount()
   return (
     <Tab.Navigator>
       <Tab.Screen name="Wallet" component={Wallet} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      {
+        address && <Tab.Screen name="Profile" component={ProfileScreen} />
+      }
       <Tab.Screen name="Explore" component={Explore} />
       <Tab.Screen name="Marketplace" component={Marketplace} />
       {/* ... other tab screens */}
@@ -65,13 +71,17 @@ function MyTabs() {
 }
 
 function App() {
+
   return (
     <WagmiConfig config={wagmiConfig}>
       <Web3Modal />
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
+          <Stack.Screen name="Battle" component={Battle} options={{ headerShown: true }} />
           <Stack.Screen name="ListOnMarketPlace" component={ListOnMarketplace} options={{ title: "", headerBackTitle: "Profile" }} />
+          <Stack.Screen name="YouWon" component={YouWon} options={{ title: "You Won", headerBackTitle: "Profile" }} />
+          <Stack.Screen name="YouLost" component={YouLost} options={{ title: "You Lost", headerBackTitle: "Profile" }} />
           {/* ... other non-tab screens */}
         </Stack.Navigator>
       </NavigationContainer>
