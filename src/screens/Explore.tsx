@@ -83,10 +83,12 @@ const styles = StyleSheet.create({
     borderWidth: 3
   },
   nftName: {
+    fontFamily: "PixelifySans",
     fontWeight: 'bold',
     fontSize: 16,
   },
   nftRarity: {
+    fontFamily: "PixelifySans",
     fontSize: 14,
     color: 'gray',
     marginBottom: 10,
@@ -95,22 +97,23 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     width: 250,
-    height: 110,
-    padding: 3
+    height: 100,
   },
   nftImage: {
+    borderRadius: 5,
     marginBottom: 5,
     marginRight: 5,
     width: 100,
     height: 100,
   },
   marketplaceButton: {
-    backgroundColor: '#4e9af1',
+    backgroundColor: '#C6FF00',
     padding: 5,
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white',
+    fontFamily: "PixelifySans",
+    color: 'black',
     fontSize: 14,
     textAlign: 'center',
   },

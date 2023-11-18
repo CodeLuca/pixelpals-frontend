@@ -61,14 +61,15 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    backgroundColor: '#4e9af1',
+    backgroundColor: '#C6FF00',
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
     marginBottom: 10,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
+    fontFamily: "PixelifySans",
     fontSize: 16,
   },
 });

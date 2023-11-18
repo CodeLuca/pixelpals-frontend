@@ -110,12 +110,13 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   addButton: {
-    backgroundColor: '#4e9af1',
+    backgroundColor: '#C6FF00',
     padding: 10,
     borderRadius: 5,
   },
   addButtonText: {
-    color: 'white',
+    color: 'black',
+    fontFamily: "PixelifySans",
     fontSize: 16,
   },
   nftList: {
@@ -144,13 +145,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   marketplaceButton: {
-    backgroundColor: '#4e9af1',
+    backgroundColor: '#C6FF00',
     padding: 10,
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
+    fontFamily: "PixelifySans",
     textAlign: 'center',
   },
 });

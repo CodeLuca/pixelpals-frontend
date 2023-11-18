@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   header: {
+    fontFamily: "PixelifySans",
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -73,20 +74,23 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
+    fontFamily: "PixelifySans",
     fontSize: 24,
     fontWeight: 'bold',
   },
   subtitle: {
+    fontFamily: "PixelifySans",
     paddingTop: 5,
     fontSize: 16,
     color: 'gray',
   },
   addButton: {
-    backgroundColor: '#4e9af1',
+    backgroundColor: '#C6FF00',
     padding: 10,
     borderRadius: 5,
   },
   addButtonText: {
+    fontFamily: "PixelifySans",
     color: 'white',
     fontSize: 16,
   },
@@ -108,20 +112,23 @@ const styles = StyleSheet.create({
   },
   nftName: {
     fontWeight: 'bold',
+    fontFamily: "PixelifySans",
     fontSize: 16,
   },
   nftRarity: {
     fontSize: 14,
+    fontFamily: "PixelifySans",
     color: 'gray',
     marginBottom: 10,
   },
   marketplaceButton: {
-    backgroundColor: '#4e9af1',
+    backgroundColor: '#C6FF00',
     padding: 10,
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white',
+    fontFamily: "PixelifySans",
+    color: 'black',
     fontSize: 16,
     textAlign: 'center',
   },

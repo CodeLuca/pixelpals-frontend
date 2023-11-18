@@ -60,10 +60,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
+    fontFamily: "PixelifySans",
     fontWeight: 'bold',
     marginBottom: 10,
   },
   subtitle: {
+    fontFamily: "PixelifySans",
     padding: 20,
     paddingTop: 0,
     textAlign: "center",
@@ -71,12 +73,13 @@ const styles = StyleSheet.create({
     color: 'gray',
   },
   button: {
-    backgroundColor: '#4e9af1',
+    backgroundColor: '#C6FF00',
     padding: 15,
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white',
+    color: 'black',
+    fontFamily: "PixelifySans",
     fontSize: 18,
   },
 });

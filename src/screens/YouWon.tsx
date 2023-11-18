@@ -1,16 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const YouWonScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Congratulations!</Text>
-      <Text style={styles.subtitle}>You Won the Battle</Text>
+      <Text style={styles.feedbackText}>You Won and managed to capture a PixelPal!</Text>
 
       {/* Display the NFT Image - replace with actual image URL */}
       <Image source={{ uri: route.params?.nftImageUrl || 'https://placekitten.com/200/200' }} style={styles.nftImage} />
 
-      <TouchableOpacity style={styles.claimButton} onPress={() => { navigation.navigate("Home") }}>
+      <TouchableOpacity style={styles.claimButton} onPress={() => {/* Claim logic */ }}>
         <Text style={styles.buttonText}>Claim Your PixelPal</Text>
       </TouchableOpacity>
     </View>
@@ -24,37 +23,39 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#e6f2ff',
   },
-  title: {
+  feedbackText: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 15,
-  },
-  subtitle: {
-    fontSize: 22,
+    textAlign: 'center',
     color: 'green',
+    fontFamily: "PixelifySans",
     marginBottom: 20,
+    padding: 10,
   },
   nftImage: {
     width: 200,
     height: 200,
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: 'black',
     marginBottom: 20,
   },
   claimButton: {
-    backgroundColor: '#4e9af1',
+    alignItems: "center",
+    borderColor: '#333',
+    borderWidth: 2,
+    backgroundColor: 'white',
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 10,
     elevation: 3,
   },
   buttonText: {
-    color: '#fff',
+    color: '#333',
+    fontFamily: "PixelifySans",
     fontSize: 16,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
-  // ... other styles ...
 });
 
 export default YouWonScreen;

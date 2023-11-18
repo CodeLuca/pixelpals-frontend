@@ -24,7 +24,8 @@
           "trust",
           "uniswap"
         ]
-      }
+      },
+      "bundleIdentifier": "com.codeluca.web3-react-native-dapp-wagmi"
     },
     "android": {
       "adaptiveIcon": {

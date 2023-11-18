@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   healthBarLabel: {
     fontWeight: 'bold',
     color: '#333',
+    fontFamily: "PixelifySans",
     marginRight: 5,
   },
   healthBar: {
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
   },
   healthText: {
     fontWeight: 'bold',
+    fontFamily: "PixelifySans",
     color: '#333',
     marginLeft: 5,
   },

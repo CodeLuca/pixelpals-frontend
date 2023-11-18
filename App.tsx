@@ -1,7 +1,9 @@
 // ⚠️ Important: `@walletconnect/react-native-compat` needs to be imported before other `wagmi` packages.
 // This is because Web3Modal has a polyfill necessary for the TextEncoder API.
 import '@walletconnect/react-native-compat';
-import React from 'react';
+import React, { useCallback } from 'react';
+import { View } from "react-native";
+import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { useAccount } from 'wagmi';
 import {
@@ -22,7 +24,6 @@ import ListOnMarketplace from './src/screens/ListOnMarketplace';
 import Battle from './src/screens/Battle';
 import YouWon from './src/screens/YouWon';
 import YouLost from './src/screens/YouLost';
-
 
 const projectId = process.env.EXPO_PUBLIC_WALLETCONNECT_CLOUD_PROJECT_ID;
 
@@ -71,6 +72,19 @@ function MyTabs() {
 }
 
 function App() {
+  const [fontsLoaded] = useFonts({
+    'PixelifySans': require('./assets/PixelifySans.ttf'),
+  });
+
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (fontsLoaded) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <WagmiConfig config={wagmiConfig}>

@@ -23,6 +23,22 @@ const BattleScreen = ({ navigation, route }) => {
     }, 1750)
   }, [])
 
+  useEffect(() => {
+    if (nftHealth <= 0 || movesLeft <= 0) {
+      const outcomePage = nftHealth <= 0 ? 'YouWon' : 'YouLost';
+
+      if (outcomePage === "YouWon")
+        setFeedbackMsg("You Won!");
+      if (outcomePage === "YouLost")
+        setFeedbackMsg("You Lost");
+
+      timerRef.current = setTimeout(() => {
+        setFeedbackMsg("");
+        navigation.navigate(outcomePage);
+      }, 1750)
+    }
+  }, [nftHealth, movesLeft])
+
   const performAttack = (move) => {
     if (movesLeft > 0) {
       const hitChance = Math.random() * 100;
@@ -41,18 +57,13 @@ const BattleScreen = ({ navigation, route }) => {
       }, 1750)
       setMovesLeft(prev => prev - 1);
     }
-
-    if (nftHealth <= 0 || movesLeft <= 0) {
-      const outcomePage = nftHealth <= 0 ? 'YouWon' : 'YouLost';
-      navigation.navigate(outcomePage);
-    }
   };
 
   return (
     <View style={styles.container}>
       {
         feedbackMsg && (
-          <Text style={[styles.feedbackText, { transform: `rotate(${10}deg)` }]}>{feedbackMsg}</Text>
+          <Text style={[styles.feedbackText, { transform: [{ rotate: `${10}deg` }] }]}>{feedbackMsg}</Text>
         )
       }
 
@@ -80,7 +91,7 @@ const AttackButton = ({ move, onAttack }) => (
     style={styles.attackButton}
     onPress={() => onAttack(move)}
   >
-    <Text>{move.name}</Text>
+    <Text style={{ fontFamily: "PixelifySans", fontWeight: "bold" }}>{move.name}</Text>
   </TouchableOpacity>
 );
 
@@ -88,12 +99,12 @@ const MoveCounter = ({ movesLeft }) => (
   <>
     {
       movesLeft === 1 && (
-        <Text style={{ marginBottom: 10, fontWeight: "bold" }}>Just 1 Move Left</Text>
+        <Text style={{ marginBottom: 10, fontWeight: "bold", fontFamily: "PixelifySans" }}>Just 1 Move Left</Text>
       )
     }
     {
       movesLeft > 1 && (
-        <Text style={{ marginBottom: 10, fontWeight: "bold" }}>Moves Remaining: {movesLeft}</Text>
+        <Text style={{ marginBottom: 10, fontWeight: "bold", fontFamily: "PixelifySans" }}>Moves Remaining: {movesLeft}</Text>
       )
     }
   </>
@@ -108,6 +119,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
+    fontFamily: "PixelifySans",
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 15,
@@ -152,6 +164,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
+    fontFamily: "PixelifySans",
     fontSize: 16,
     fontWeight: 'bold',
     width: "100%",
@@ -162,6 +175,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 10000,
     top: 150,
+    fontFamily: "PixelifySans",
     backgroundColor: "white",
     padding: 20,
     fontWeight: 'bold',
