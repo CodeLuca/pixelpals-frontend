@@ -2,16 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
+import { useContractRead } from 'wagmi';
+import { abis, ca } from '../web3/constants/contants';
 
 const ExploreScreen = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [nfts, setNfts] = useState([
-    // Dummy data for NFTs with location coordinates and other details
-    { id: 'nft1', name: 'NFT One', rarity: 'Rare', imageUrl: 'https://example.com/nft1.jpg', latitude: 37.78825, longitude: -122.4324 },
-    // Add more NFTs here
+    { id: 2, name: 'Pixel#2', rarity: 'Super-Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/1.png'},
+    { id: 35, name: 'Pixel#35', rarity: 'Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/8.png'},
+    { id: 45, name: 'Pixel#45', rarity: 'Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/9.png'},
+    { id: 75, name: 'Pixel#75', rarity: 'Common', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/11.png'},
+    { id: 85, name: 'Pixel#85', rarity: 'Common', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/12.png'},
   ]);
-
+  const {data} = useContractRead({
+    address: ca.random_coordinates,
+    abi: abis.random_coordinates,
+    functionName: 'getGeneratedData',
+    chainId: 80001
+  })
+  const random_locations = data[0];
+  console.log(random_locations);
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -44,10 +55,10 @@ const ExploreScreen = () => {
       initialRegion={location}
       showsUserLocation={true}
     >
-      {nfts.map(nft => (
+      {nfts.map((nft, index) => (
         <Marker
           key={nft.id}
-          coordinate={{ latitude: nft.latitude, longitude: nft.longitude }}
+          coordinate={{ latitude: Number(random_locations[2*index])/100000, longitude: Number(random_locations[(2*index)+1])/100000 }}
           title={nft.name}
         >
           <Callout>

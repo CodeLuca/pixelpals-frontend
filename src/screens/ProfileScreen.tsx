@@ -17,23 +17,23 @@ const get_nft_data = async (user_add) => {
 
 const get_nft_rarity = (token_id) => {
   if (token_id >= 0 && token_id < 10) {
-    return "S";
+    return "Ultra-Rare";
   }
   else if (token_id >= 10 && token_id < 60) {
-    return "A";
+    return "Rare";
   }
   else {
-    return "B";
+    return "Common";
   }
 }
 
-const NFTComponent = ({ name, rarity, imageUrl, navigation }) => {
+const NFTComponent = ({ name, rarity, imageUrl, tokenID, navigation }) => {
   return (
     <View style={styles.nftContainer}>
       <Image source={{ uri: imageUrl }} style={styles.nftImage} />
       <Text style={styles.nftName}>{name}</Text>
-      <Text style={styles.nftRarity}>{rarity}</Text>
-      <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("ListOnMarketPlace")}>
+      <Text style={styles.nftRarity}>Rarity: {rarity}</Text>
+      <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("ListOnMarketPlace",{name: name, rarity: rarity, imageUrl: imageUrl, tokenID: tokenID})}>
         <Text style={styles.buttonText}>List on Market</Text>
       </TouchableOpacity>
     </View>
@@ -76,6 +76,7 @@ const ProfileScreen = ({ navigation }) => {
             navigation={navigation}
             name={item.name}
             rarity={get_nft_rarity(item.tokenId)}
+            tokenID={item.tokenId}
             imageUrl={item.image.cachedUrl} />
         )}
         keyExtractor={item => item.tokenId}

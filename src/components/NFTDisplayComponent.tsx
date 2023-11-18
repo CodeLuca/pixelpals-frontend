@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-const NFTDisplayComponent = ({ name = "Loading...", rarity = "Loading...", imageUrl = "https://placehold.it/100x100" }) => {
+const NFTDisplayComponent = ({ name, rarity, imageUrl }) => {
   return (
     <View style={styles.container}>
       <Image source={{ uri: imageUrl }} style={styles.image} />
