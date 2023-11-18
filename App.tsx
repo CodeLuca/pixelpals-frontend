@@ -16,6 +16,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import WelcomeScreen from './src/screens/WelcomeScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import Explore from './src/screens/Explore';
 import Marketplace from './src/screens/Marketplace';
 import ListOnMarketplace from './src/screens/ListOnMarketplace';
 
@@ -54,6 +55,7 @@ function MyTabs() {
     <Tab.Navigator>
       <Tab.Screen name="Welcome" component={WelcomeScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Explore" component={Explore} />
       <Tab.Screen name="Marketplace" component={Marketplace} />
       {/* ... other tab screens */}
     </Tab.Navigator>
