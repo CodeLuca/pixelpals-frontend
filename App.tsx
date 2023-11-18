@@ -9,16 +9,17 @@ import {
   Web3Modal,
 } from '@web3modal/wagmi-react-native';
 import { WagmiConfig } from 'wagmi';
-import { mainnet, polygon, arbitrum, polygonMumbai } from 'wagmi/chains';
+import { mainnet, polygon, arbitrum, polygonMumbai, baseGoerli } from 'wagmi/chains';
 import HomePage from './src/pages/HomePage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import WelcomeScreen from './src/screens/WelcomeScreen';
+import Wallet from './src/screens/Wallet';
 import ProfileScreen from './src/screens/ProfileScreen';
 import Explore from './src/screens/Explore';
 import Marketplace from './src/screens/Marketplace';
 import ListOnMarketplace from './src/screens/ListOnMarketplace';
+
 
 const projectId = process.env.EXPO_PUBLIC_WALLETCONNECT_CLOUD_PROJECT_ID;
 
@@ -35,7 +36,7 @@ const metadata = {
 };
 
 // Chains that will be supported by the dApp
-const chains = [mainnet, polygon, polygonMumbai, arbitrum];
+const chains = [mainnet, polygon, polygonMumbai, arbitrum, baseGoerli];
 
 // Create wagmi config
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
@@ -45,6 +46,7 @@ createWeb3Modal({
   projectId,
   chains,
   wagmiConfig,
+  defaultChain: baseGoerli
 });
 
 const Stack = createNativeStackNavigator();
@@ -53,7 +55,7 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Welcome" component={WelcomeScreen} />
+      <Tab.Screen name="Wallet" component={Wallet} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
       <Tab.Screen name="Explore" component={Explore} />
       <Tab.Screen name="Marketplace" component={Marketplace} />
@@ -64,7 +66,6 @@ function MyTabs() {
 
 function App() {
   return (
-
     <WagmiConfig config={wagmiConfig}>
       <Web3Modal />
       <NavigationContainer>

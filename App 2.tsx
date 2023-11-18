@@ -33,7 +33,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import WelcomeScreen from './screens/WelcomeScreen';
+import Wallet from './screens/Wallet';
 import ProfileScreen from './screens/ProfileScreen';
 import Marketplace from './screens/Marketplace';
 import ListOnMarketplace from './screens/ListOnMarketplace';
@@ -45,7 +45,7 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Welcome" component={WelcomeScreen} />
+      <Tab.Screen name="Welcome" component={Wallet} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
       <Tab.Screen name="Marketplace" component={Marketplace} />
       {/* ... other tab screens */}
