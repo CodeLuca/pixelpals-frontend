@@ -1,21 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
+import { useAccount } from 'wagmi';
 
-const nftData = [
-  {
-    id: '1',
-    name: 'Mystic Dragon',
-    rarity: 'Ultra Rare',
-    imageUrl: 'https://placekitten.com/200/200' // Replace with actual image URLs
-  },
-  {
-    id: '2',
-    name: 'Space Whale',
-    rarity: 'Rare',
-    imageUrl: 'https://placekitten.com/201/201'
-  },
-  // Add more dummy items as needed
-];
+const get_nft_data = async (user_add) => {
+  const options = { method: 'GET', headers: { accept: 'application/json' } };
+
+  await fetch(`https://base-goerli.g.alchemy.com/nft/v3/AUZvnXkKIjSqOHnc1GfSwHUM-43pGIm1/getNFTsForOwner?owner=${user_add}&contractAddresses[]=0x1268dAf5764992Fa620c6B70f0FEfF5FEc79dbc5&withMetadata=true&pageSize=100`, options)
+    .then(response => response.json())
+    .then(response => {
+      console.log(response.ownedNfts);
+      return response.ownedNfts;
+    })
+    .catch(err => console.error(err));
+
+}
+
+const get_nft_rarity = (token_id) => {
+  if (token_id >= 0 && token_id < 10) {
+    return "S";
+  }
+  else if (token_id >= 10 && token_id < 60) {
+    return "A";
+  }
+  else {
+    return "B";
+  }
+}
 
 const NFTComponent = ({ name, rarity, imageUrl, navigation }) => {
   return (
@@ -30,31 +40,48 @@ const NFTComponent = ({ name, rarity, imageUrl, navigation }) => {
   );
 };
 
-const ProfileScreen = ({ walletAddress = '0x123...abc', navigation }) => {
+const ProfileScreen = ({ navigation }) => {
+  const { address } = useAccount();
+  const [nftData, setNftData] = useState(null);
+  useEffect(() => {
+    if (address) {
+      const fetch_data = async () => {
+        const options = { method: 'GET', headers: { accept: 'application/json' } };
+        await fetch(`https://base-goerli.g.alchemy.com/nft/v3/AUZvnXkKIjSqOHnc1GfSwHUM-43pGIm1/getNFTsForOwner?owner=${address}&contractAddresses[]=0x1268dAf5764992Fa620c6B70f0FEfF5FEc79dbc5&withMetadata=true&pageSize=100`, options)
+          .then(response => response.json())
+          .then(response => {
+            setNftData(response.ownedNfts);
+          })
+          .catch(err => console.error(err));
+      }
+      fetch_data();
+    }
+
+  }, [address])
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>My PixelPals</Text>
-          <Text style={styles.subtitle}>{walletAddress}</Text>
+          {address ? <Text style={styles.subtitle}>{address.slice(0, 4) + '...' + address.slice(-4, -1)}</Text> : <></>}
         </View>
         <TouchableOpacity style={styles.addButton}>
           <Text style={styles.addButtonText}>Add Funds</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
+      {nftData && <FlatList
         data={nftData}
         renderItem={({ item }) => (
           <NFTComponent
             navigation={navigation}
             name={item.name}
-            rarity={item.rarity}
-            imageUrl={item.imageUrl} />
+            rarity={get_nft_rarity(item.tokenId)}
+            imageUrl={item.image.cachedUrl} />
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.tokenId}
         numColumns={2}
         contentContainerStyle={styles.nftList}
-      />
+      />}
     </View>
   );
 };
