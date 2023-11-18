@@ -1,12 +1,22 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useWeb3Modal } from '@web3modal/wagmi-react-native';
-import { useAccount, useDisconnect } from 'wagmi';
+import { useAccount, useContractRead } from 'wagmi';
 
 const Wallet = ({ navigation }) => {
   const { open } = useWeb3Modal();
   const { address, isConnecting, isDisconnected } = useAccount()
-  const { disconnect } = useDisconnect();
+
+  // const { data, isError, isLoading } = useContractRead(
+  //   {
+  //     addressOrName: 'address',
+  //     contractInterface: interface,
+  //   },
+  //   'balanceOf',
+  //   {
+  //     args: address
+  //   }
+  // )
 
   return (
     <View style={styles.container}>
