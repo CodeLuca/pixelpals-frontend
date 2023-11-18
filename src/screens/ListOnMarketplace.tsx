@@ -1,16 +1,39 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import NFTDisplayComponent from '../components/NFTDisplayComponent';
+import { useContractWrite } from 'wagmi';
+import { ca, abis } from '../web3/constants/contants';
+import {writeContract, getPublicClient} from '@wagmi/core'
 
-const ListOnMarketplace = ({ nft }) => {
+const ListOnMarketplace = ({ route, navigation }) => {
   const [listPrice, setListPrice] = useState('');
+  const { name, rarity, imageUrl, tokenID } = route.params;
+  const publicClient = getPublicClient({chainId: 84531});
+
+  //user approves nft to contract first 
+  const { write } = useContractWrite({ 
+    address: ca.myNFT, 
+    abi: abis.myNFT, 
+    functionName: 'approve',
+    chainId: 84531,
+    args: [ca.pixels,tokenID],
+    onSuccess: async()=> {
+        const {hash} = await writeContract({
+          address: ca.pixels,
+          abi: abis.pixels,
+          functionName: 'list_pixel',
+          args: [tokenID, listPrice],
+          chainId: 84531
+        });
+        await publicClient.waitForTransactionReceipt({hash: hash});
+    },
+  });
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>List PixelPal on Market</Text>
 
-      {/* NFT Display Component - Use actual NFT data */}
-      <NFTDisplayComponent {...nft} />
+      <NFTDisplayComponent name={name} rarity={rarity} imageUrl={imageUrl} />
 
       {/* Price Input */}
       <View style={styles.inputContainer}>
@@ -25,7 +48,7 @@ const ListOnMarketplace = ({ nft }) => {
       </View>
 
       {/* Action Buttons */}
-      <TouchableOpacity style={styles.button} onPress={() => {/* Listing logic */ }}>
+      <TouchableOpacity style={styles.button} onPress={() => write?.()} disabled={!write}>
         <Text style={styles.buttonText}>List on Market</Text>
       </TouchableOpacity>
     </View>
