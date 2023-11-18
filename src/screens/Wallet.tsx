@@ -2,10 +2,21 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useWeb3Modal } from '@web3modal/wagmi-react-native';
 import { useAccount, useDisconnect } from 'wagmi';
+import {readContract} from '@wagmi/core'
+import {abis,ca} from '../web3/constants/contants'
 
 const Wallet = ({ navigation }) => {
   const { open } = useWeb3Modal();
-  const { address, isConnecting, isDisconnected } = useAccount()
+  const { address, isConnected, isDisconnected } = useAccount({onConnect: async()=>{
+    const data = await readContract({
+      address: ca.myNFT,
+      abi: abis.myNFT,
+      functionName: 'balanceOf',
+      chainId: 84531,
+      args: [address]
+    })
+    console.log(Number(data));
+  }})
   const { disconnect } = useDisconnect();
 
   return (
