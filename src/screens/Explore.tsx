@@ -9,20 +9,23 @@ const ExploreScreen = ({ navigation }) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [nfts, setNfts] = useState([
-    { id: 2, name: 'Pixel#2', rarity: 'Super-Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/1.png'},
-    { id: 35, name: 'Pixel#35', rarity: 'Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/8.png'},
-    { id: 45, name: 'Pixel#45', rarity: 'Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/9.png'},
-    { id: 75, name: 'Pixel#75', rarity: 'Common', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/11.png'},
-    { id: 85, name: 'Pixel#85', rarity: 'Common', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/12.png'},
+    { id: 2, name: 'Pixel#2', rarity: 'Super-Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/1.png' },
+    { id: 35, name: 'Pixel#35', rarity: 'Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/8.png' },
+    { id: 45, name: 'Pixel#45', rarity: 'Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/9.png' },
+    { id: 75, name: 'Pixel#75', rarity: 'Common', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/11.png' },
+    { id: 85, name: 'Pixel#85', rarity: 'Common', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/12.png' },
   ]);
-  const {data} = useContractRead({
+
+  const { data } = useContractRead({
     address: ca.random_coordinates,
     abi: abis.random_coordinates,
     functionName: 'getGeneratedData',
     chainId: 80001
   })
-  const random_locations = data[0];
+
+  const random_locations = data ? data[0] : null;
   console.log(random_locations);
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -58,17 +61,17 @@ const ExploreScreen = ({ navigation }) => {
       {nfts.map((nft, index) => (
         <Marker
           key={nft.id}
-          coordinate={{ latitude: Number(random_locations[2*index])/100000, longitude: Number(random_locations[(2*index)+1])/100000 }}
+          coordinate={{ latitude: (Number(random_locations[2 * index])-200) / 100000, longitude: (Number(random_locations[(2 * index) + 1])+50) / 100000 }}
           title={nft.name}
         >
-          <Image source={{ uri: "https://placekitten.com/200/200" }} style={styles.markerImage} />
+          <Image source={{ uri: nft.imageUrl }} style={styles.markerImage} />
           <Callout>
             <View style={styles.calloutView}>
               <Image source={{ uri: nft.imageUrl }} style={styles.nftImage} />
               <View style={{ flex: 1, padding: 10 }}>
                 <Text style={styles.nftName}>{nft.name}</Text>
                 <Text style={styles.nftRarity}>Rarity: {nft.rarity}</Text>
-                <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("Battle")}>
+                <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("Battle",{})}>
                   <Text style={styles.buttonText}>Battle</Text>
                 </TouchableOpacity>
               </View>
