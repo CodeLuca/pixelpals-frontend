@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const YouWonScreen = ({ navigation, route }) => {
-  const {imageURL} = route.params;
+  const { imageURL } = route.params;
   return (
     <View style={styles.container}>
       <Text style={styles.feedbackText}>The PixelPal Got Away!</Text>
@@ -20,7 +20,7 @@ const YouWonScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    maxHeight: "90%",
+    maxHeight: "100%",
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#f8ffde',

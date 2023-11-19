@@ -1,30 +1,39 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { wallet_client } from '../web3/wagmi_client';
 import { abis, ca } from '../web3/constants/contants'
 import { readContract } from '@wagmi/core';
 import { useAccount, usePublicClient } from 'wagmi';
-import {possible_Tokens} from '../web3/possible_token';
+import { possible_Tokens } from '../web3/possible_token';
 
 const MintFirstNFT = ({ navigation, route }) => {
+  const [loading, setLoading] = useState(false);
   const { address } = useAccount();
-  const public_client = usePublicClient({chainId: 84531})
+  const public_client = usePublicClient({ chainId: 84531 })
   const mint_nft = async () => {
     if (!address) {
       return
     }
+    setLoading(true);
+
     const possible_tokens: Array<number> = await possible_Tokens();
     const tokenID = possible_tokens[Math.floor(Math.random() * (possible_tokens.length - 60 + 1)) + 60]
-    
-    const hash = await wallet_client.writeContract({
-      address: ca.pixels,
-      abi: abis.pixels,
-      functionName: 'mintNFT',
-      args: [tokenID, address]
-    })
 
-    await public_client.waitForTransactionReceipt({hash:hash});
-    navigation.navigate("Profile");
+    try {
+      const hash = await wallet_client.writeContract({
+        address: ca.pixels,
+        abi: abis.pixels,
+        functionName: 'mintNFT',
+        args: [tokenID, address]
+      })
+
+      await public_client.waitForTransactionReceipt({ hash: hash });
+      navigation.navigate("Profile");
+      setLoading(false);
+    } catch (e) {
+      navigation.navigate("Explore");
+      setLoading(false);
+    }
   }
   return (
     <View style={styles.container}>
@@ -33,9 +42,11 @@ const MintFirstNFT = ({ navigation, route }) => {
       {/* Display the NFT Image - replace with actual image URL */}
       {/* <Image source={{ uri: imageURL }} style={styles.nftImage} /> */}
 
-      <TouchableOpacity style={styles.claimButton} onPress={() => {/* Claim logic */ }}>
-        <Text style={styles.buttonText} onPress={mint_nft}>Claim Your PixelPal</Text>
-      </TouchableOpacity>
+      {loading ? <ActivityIndicator /> : (
+        <TouchableOpacity style={styles.claimButton} onPress={() => mint_nft()}>
+          <Text style={styles.buttonText}>Claim Your PixelPal</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

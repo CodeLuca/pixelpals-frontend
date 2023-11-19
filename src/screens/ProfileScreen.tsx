@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { useAccount } from 'wagmi';
 import { useWeb3Modal } from '@web3modal/wagmi-react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 const get_nft_data = async (user_add) => {
   const options = { method: 'GET', headers: { accept: 'application/json' } };
@@ -46,20 +47,29 @@ const ProfileScreen = ({ navigation }) => {
   const [nftData, setNftData] = useState(null);
   const { open } = useWeb3Modal();
 
+  const fetch_data = async () => {
+    const options = { method: 'GET', headers: { accept: 'application/json' } };
+    await fetch(`https://base-goerli.g.alchemy.com/nft/v3/AUZvnXkKIjSqOHnc1GfSwHUM-43pGIm1/getNFTsForOwner?owner=${address}&contractAddresses[]=0x1268dAf5764992Fa620c6B70f0FEfF5FEc79dbc5&withMetadata=true&pageSize=100`, options)
+      .then(response => response.json())
+      .then(response => {
+        setNftData(response.ownedNfts);
+      })
+      .catch(err => console.error(err));
+  }
+
   useEffect(() => {
     if (address) {
-      const fetch_data = async () => {
-        const options = { method: 'GET', headers: { accept: 'application/json' } };
-        await fetch(`https://base-goerli.g.alchemy.com/nft/v3/AUZvnXkKIjSqOHnc1GfSwHUM-43pGIm1/getNFTsForOwner?owner=${address}&contractAddresses[]=0x1268dAf5764992Fa620c6B70f0FEfF5FEc79dbc5&withMetadata=true&pageSize=100`, options)
-          .then(response => response.json())
-          .then(response => {
-            setNftData(response.ownedNfts);
-          })
-          .catch(err => console.error(err));
-      }
       fetch_data();
     }
   }, [address])
+
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetch_data();
+    }, [])
+  );
+
 
   return (
     <View style={styles.container}>
@@ -142,6 +152,8 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#fff',
     borderRadius: 10,
+    maxWidth: "48%",
+    borderWidth: 2
   },
   nftImage: {
     width: '100%',
