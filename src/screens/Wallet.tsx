@@ -7,19 +7,7 @@ import { abis, ca } from '../web3/constants/contants'
 
 const Wallet = ({ navigation }) => {
   const { open } = useWeb3Modal();
-  const { address, isConnected, isDisconnected } = useAccount({
-    onConnect: async () => {
-      const data = await readContract({
-        address: ca.myNFT,
-        abi: abis.myNFT,
-        functionName: 'balanceOf',
-        chainId: 84531,
-        args: [address]
-      })
-      console.log(Number(data));
-    }
-  })
-  const { disconnect } = useDisconnect();
+  const { address } = useAccount()
 
   return (
     <View style={styles.container}>

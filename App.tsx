@@ -1,7 +1,7 @@
 // ⚠️ Important: `@walletconnect/react-native-compat` needs to be imported before other `wagmi` packages.
 // This is because Web3Modal has a polyfill necessary for the TextEncoder API.
 import '@walletconnect/react-native-compat';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View } from "react-native";
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
@@ -24,6 +24,7 @@ import ListOnMarketplace from './src/screens/ListOnMarketplace';
 import Battle from './src/screens/Battle';
 import YouWon from './src/screens/YouWon';
 import YouLost from './src/screens/YouLost';
+import MintFirstNFT from './src/screens/MintFirstNFT';
 
 const projectId = process.env.EXPO_PUBLIC_WALLETCONNECT_CLOUD_PROJECT_ID;
 
@@ -57,10 +58,27 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
-  const { address } = useAccount()
+  const [nftCount, setNftCount] = useState(null);
+
+  const { address } = useAccount({
+    onConnect: async () => {
+      const data = await readContract({
+        address: ca.myNFT,
+        abi: abis.myNFT,
+        functionName: 'balanceOf',
+        chainId: 84531,
+        args: [address]
+      })
+      // console.log(Number(data));
+      setNftCount(Number(data));
+    }
+  })
 
   if (!address)
     return <Wallet />
+
+  if (!nftCount)
+    return <MintFirstNFT />
 
 
   return (

@@ -27,11 +27,13 @@ const styles = StyleSheet.create({
   },
   name: {
     fontWeight: 'bold',
+    fontFamily: "PixelifySans",
     fontSize: 16,
     marginBottom: 5,
   },
   rarity: {
     fontSize: 14,
+    fontFamily: "PixelifySans",
     color: 'gray',
   },
 });

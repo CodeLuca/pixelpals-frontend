@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
+    fontFamily: "PixelifySans",
     fontWeight: 'bold',
     marginBottom: 20,
   },
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
+    fontFamily: "PixelifySans",
     fontSize: 16,
     marginBottom: 5,
   },
@@ -82,6 +84,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderRadius: 5,
     padding: 10,
+    fontFamily: "PixelifySans",
   },
   button: {
     backgroundColor: '#C6FF00',

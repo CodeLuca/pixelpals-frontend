@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { wallet_client } from '../web3/wagmi_client';
-import { abis, ca } from '../web3/constants/contants';
+import { abis, ca } from '../web3/constants/contants'
+import { readContract } from '@wagmi/core';
 import { useAccount } from 'wagmi';
 
-const YouWonScreen = ({ navigation, route }) => {
-  const { imageURL, tokenID } = route.params;
+const MintFirstNFT = ({ navigation, route }) => {
   const { address } = useAccount();
   const mint_nft = async () => {
     if (!address) {
@@ -20,10 +20,10 @@ const YouWonScreen = ({ navigation, route }) => {
   }
   return (
     <View style={styles.container}>
-      <Text style={styles.feedbackText}>You Won and captued a PixelPal!</Text>
-
+      <Text style={styles.feedbackText}>Your first PixelPal is on us.</Text>
+      <Text style={styles.subtitle}>BAYC members receive a rare PixelPal</Text>
       {/* Display the NFT Image - replace with actual image URL */}
-      <Image source={{ uri: imageURL }} style={styles.nftImage} />
+      {/* <Image source={{ uri: imageURL }} style={styles.nftImage} /> */}
 
       <TouchableOpacity style={styles.claimButton} onPress={() => {/* Claim logic */ }}>
         <Text style={styles.buttonText} onPress={mint_nft}>Claim Your PixelPal</Text>
@@ -43,7 +43,16 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: 'green',
+    color: 'black',
+    fontFamily: "PixelifySans",
+    padding: 10,
+    paddingTop: 0
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'black',
     fontFamily: "PixelifySans",
     marginBottom: 20,
     padding: 10,
@@ -61,7 +70,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: '#333',
     borderWidth: 2,
-    backgroundColor: 'white',
+    backgroundColor: '#C6FF00',
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -75,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default YouWonScreen;
+export default MintFirstNFT;

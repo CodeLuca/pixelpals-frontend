@@ -60,6 +60,7 @@ const ExploreScreen = ({ navigation }) => {
   return (
     <MapView
       style={styles.map}
+      minZoomLevel={16}
       initialRegion={location}
       showsUserLocation={true}
     >
@@ -144,6 +145,8 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     marginTop: 20,
+    textAlign: "center",
+    padding: 20,
     fontFamily: "PixelifySans",
     fontSize: 16,
     color: '#333',
