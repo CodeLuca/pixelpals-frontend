@@ -5,6 +5,7 @@ import { abis, ca } from '../web3/constants/contants'
 import { readContract } from '@wagmi/core';
 import { useAccount, usePublicClient } from 'wagmi';
 import { possible_Tokens } from '../web3/possible_token';
+import { is_member } from '../web3/check_ape_membership.js';
 
 const MintFirstNFT = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
@@ -15,7 +16,7 @@ const MintFirstNFT = ({ navigation, route }) => {
       return
     }
     setLoading(true);
-
+    const is_BoredApe_DAO_member = is_member(address);
     const possible_tokens: Array<number> = await possible_Tokens();
     const tokenID = possible_tokens[Math.floor(Math.random() * (possible_tokens.length - 60 + 1)) + 60]
 
