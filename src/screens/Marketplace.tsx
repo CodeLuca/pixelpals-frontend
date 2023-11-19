@@ -1,36 +1,44 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
+import { get_listings } from '../web3/get_listings_covalant';
+import { useAccount } from 'wagmi';
+import {img_uri} from '../web3/constants/img_url';
+const get_nft_rarity = (token_id) => {
+  if (token_id >= 0 && token_id < 10) {
+    return "Ultra-Rare";
+  }
+  else if (token_id >= 10 && token_id < 60) {
+    return "Rare";
+  }
+  else {
+    return "Common";
+  }
+}
 
-const nftData = [
-  {
-    id: '1',
-    name: 'Mystic Dragon',
-    rarity: 'Ultra Rare',
-    imageUrl: 'https://placekitten.com/200/200' // Replace with actual image URLs
-  },
-  {
-    id: '2',
-    name: 'Space Whale',
-    rarity: 'Rare',
-    imageUrl: 'https://placekitten.com/201/201'
-  },
-  // Add more dummy items as needed
-];
+const NFTComponent = ({ name, rarity, imageUrl, tokenID, price ,navigation }) => {
 
-const NFTComponent = ({ name, rarity, imageUrl, navigation }) => {
   return (
     <View style={styles.nftContainer}>
       <Image source={{ uri: imageUrl }} style={styles.nftImage} />
       <Text style={styles.nftName}>{name}</Text>
       <Text style={styles.nftRarity}>{rarity}</Text>
-      <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("ListOnMarketPlace  ")}>
-        <Text style={styles.buttonText}>Buy for 2 USDT</Text>
+      <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("ListOnMarketPlace",{name: name, rarity: rarity, imageUrl: imageUrl, tokenID: tokenID})}>
+        <Text style={styles.buttonText}>Buy for {price} USDT</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-const Marketplace = ({ walletAddress = '0x123...abc', navigation }) => {
+const Marketplace = ({ navigation }) => {
+  const {address} = useAccount();
+  const [nftData, setNftData] = useState([]);
+  useEffect(()=>{
+    const get_data = async()=>{
+      const data = await get_listings();
+      setNftData(data)
+    }
+    get_data();
+  },[])
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -45,9 +53,12 @@ const Marketplace = ({ walletAddress = '0x123...abc', navigation }) => {
         renderItem={({ item }) => (
           <NFTComponent
             navigation={navigation}
-            name={item.name}
-            rarity={item.rarity}
-            imageUrl={item.imageUrl} />
+            name={`Pixel#${item.id}`}
+            rarity={get_nft_rarity(item.id)}
+            imageUrl={img_uri[item.id-1]} 
+            price = {item.sale_price}
+            tokenID = {item.id}
+            />
         )}
         keyExtractor={item => item.id}
         numColumns={2}

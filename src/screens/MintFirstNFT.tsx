@@ -3,20 +3,28 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { wallet_client } from '../web3/wagmi_client';
 import { abis, ca } from '../web3/constants/contants'
 import { readContract } from '@wagmi/core';
-import { useAccount } from 'wagmi';
+import { useAccount, usePublicClient } from 'wagmi';
+import {possible_Tokens} from '../web3/possible_token';
 
 const MintFirstNFT = ({ navigation, route }) => {
   const { address } = useAccount();
+  const public_client = usePublicClient({chainId: 84531})
   const mint_nft = async () => {
     if (!address) {
       return
     }
-    await wallet_client.writeContract({
+    const possible_tokens: Array<number> = await possible_Tokens();
+    const tokenID = possible_tokens[Math.floor(Math.random() * (possible_tokens.length - 60 + 1)) + 60]
+    
+    const hash = await wallet_client.writeContract({
       address: ca.pixels,
       abi: abis.pixels,
       functionName: 'mintNFT',
       args: [tokenID, address]
     })
+
+    await public_client.waitForTransactionReceipt({hash:hash});
+    navigation.navigate("Profile");
   }
   return (
     <View style={styles.container}>

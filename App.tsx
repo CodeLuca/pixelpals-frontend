@@ -2,7 +2,7 @@
 // This is because Web3Modal has a polyfill necessary for the TextEncoder API.
 import '@walletconnect/react-native-compat';
 import React, { useCallback, useState } from 'react';
-import { View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { useFonts } from 'expo-font';
 import { StatusBar } from 'expo-status-bar';
 import { useAccount } from 'wagmi';
@@ -25,6 +25,9 @@ import Battle from './src/screens/Battle';
 import YouWon from './src/screens/YouWon';
 import YouLost from './src/screens/YouLost';
 import MintFirstNFT from './src/screens/MintFirstNFT';
+import { isNew } from './src/web3/user_new_or_not';
+import { readContract } from '@wagmi/core';
+import { ca, abis } from './src/web3/constants/contants';
 
 const projectId = process.env.EXPO_PUBLIC_WALLETCONNECT_CLOUD_PROJECT_ID;
 
@@ -59,6 +62,8 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   const [nftCount, setNftCount] = useState(null);
+  const [new_user, setNew] = useState(false);
+  const [loadingUserData, setLoadingUserData] = useState(true);
 
   const { address } = useAccount({
     onConnect: async () => {
@@ -69,15 +74,21 @@ function MyTabs() {
         chainId: 84531,
         args: [address]
       })
+      const isnew = await isNew(address);
       // console.log(Number(data));
       setNftCount(Number(data));
+      setNew(isnew);
+      setLoadingUserData(false);
     }
   })
 
   if (!address)
     return <Wallet />
 
-  if (!nftCount)
+  if (loadingUserData)
+    return <ActivityIndicator />
+
+  if (!nftCount && new_user)
     return <MintFirstNFT />
 
 
