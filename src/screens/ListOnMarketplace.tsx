@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import NFTDisplayComponent from '../components/NFTDisplayComponent';
 import { useContractWrite } from 'wagmi';
 import { ca, abis } from '../web3/constants/contants';
 import { writeContract, getPublicClient } from '@wagmi/core'
 
 const ListOnMarketplace = ({ route, navigation }) => {
+  const [loading, setLoading] = useState(false);
   const [listPrice, setListPrice] = useState('');
   const { name, rarity, imageUrl, tokenID } = route.params;
   const publicClient = getPublicClient({ chainId: 84531 });
@@ -26,6 +27,8 @@ const ListOnMarketplace = ({ route, navigation }) => {
         chainId: 84531
       });
       await publicClient.waitForTransactionReceipt({ hash: hash });
+      navigation.navigate("Marketplace");
+      setLoading(false);
     },
   });
 
@@ -48,9 +51,13 @@ const ListOnMarketplace = ({ route, navigation }) => {
       </View>
 
       {/* Action Buttons */}
-      <TouchableOpacity style={styles.button} onPress={() => write?.()} disabled={!write}>
-        <Text style={styles.buttonText}>List on Market</Text>
-      </TouchableOpacity>
+      {
+        loading ? <ActivityIndicator /> : (
+          <TouchableOpacity style={styles.button} onPress={() => { setLoading(true); write?.() }} disabled={!write}>
+            <Text style={styles.buttonText}>List on Market</Text>
+          </TouchableOpacity>
+        )
+      }
     </View>
   );
 };
