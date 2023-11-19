@@ -1,4 +1,7 @@
+import { getPublicClient } from "@wagmi/core";
+import { abis, ca } from "./constants/contants";
 export const get_listings = async ()=>{
+    const public_client = getPublicClient({chainId: 84531});
     const query = new URLSearchParams({offset: '0', limit: '10'}).toString();
     const link = `https://wwf3tteys5dnfnctucw7rqjtya.multibaas.com/api/v0/queries?${query}`;
     const resp = await fetch(link,
@@ -47,8 +50,22 @@ export const get_listings = async ()=>{
 
     const data = await resp.json();
     const arr = data.result.rows;
-    const final_arr = arr.filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i)
-    return final_arr;
+    let final_arr = arr.filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i);
+    for (let index = 0; index < final_arr.length; index++) {
+        const tokenId = Number(final_arr[index].id);
+
+       const data = await public_client.readContract({
+            address: ca.pixels,
+            abi: abis.pixels,
+            functionName: 'listings',
+            args: [tokenId]
+                })
+        if(data[2] == true){
+            delete final_arr[index];
+        }        
+    }
+
+    return final_arr.filter((e) => e);
 }
 
 // {
