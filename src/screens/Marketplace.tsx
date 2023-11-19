@@ -22,7 +22,7 @@ const NFTComponent = ({ name, rarity, imageUrl, tokenID, price ,navigation }) =>
       <Image source={{ uri: imageUrl }} style={styles.nftImage} />
       <Text style={styles.nftName}>{name}</Text>
       <Text style={styles.nftRarity}>{rarity}</Text>
-      <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("ListOnMarketPlace",{name: name, rarity: rarity, imageUrl: imageUrl, tokenID: tokenID})}>
+      <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("PayForNFT",{name: name, rarity: rarity, imageUrl: imageUrl, tokenID: tokenID, price: price})}>
         <Text style={styles.buttonText}>Buy for {price} USDT</Text>
       </TouchableOpacity>
     </View>

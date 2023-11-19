@@ -1302,5 +1302,9 @@ export const abis = {
 export const ca = {
         pixels : `0xd4997d8c2ddf898f69d90c2d5b7d4566039b90a2`,
         myNFT: `0x1268dAf5764992Fa620c6B70f0FEfF5FEc79dbc5`, 
-        random_coordinates: `0x5f5a219CA1aAA343104E06973bCe6B76bE531FD5`
-    } 
+        random_coordinates: `0x5f5a219CA1aAA343104E06973bCe6B76bE531FD5`,
+        ccip_sender_op: `0xd9405f0b7e557b31f0fd50cfbd919fc9c21391ff`,
+        ccip_sender_avax: `0x5a58d3bc52c578355ad0a27a2ab40e9ccbf8e184`,
+        ccip_sender_matic: `0xbe4ef6aa6d4484170c690d488a8a61cf4f19cf61`,
+        ccip_sender_arb: `0xd4997d8c2ddf898f69d90c2d5b7d4566039b90a2`
+  } 

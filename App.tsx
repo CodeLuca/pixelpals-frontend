@@ -12,7 +12,7 @@ import {
   Web3Modal,
 } from '@web3modal/wagmi-react-native';
 import { WagmiConfig } from 'wagmi';
-import { mainnet, polygon, arbitrum, polygonMumbai, baseGoerli } from 'wagmi/chains';
+import { mainnet, polygon, arbitrum, polygonMumbai, baseGoerli, avalancheFuji } from 'wagmi/chains';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -45,7 +45,7 @@ const metadata = {
 };
 
 // Chains that will be supported by the dApp
-const chains = [mainnet, polygon, polygonMumbai, arbitrum, baseGoerli];
+const chains = [mainnet, polygon, polygonMumbai, arbitrum, baseGoerli, avalancheFuji];
 
 // Create wagmi config
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
