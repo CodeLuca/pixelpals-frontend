@@ -2,12 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 const YouWonScreen = ({ navigation, route }) => {
+  const {imageURL} = route.params;
   return (
     <View style={styles.container}>
       <Text style={styles.feedbackText}>The PixelPal Got Away!</Text>
 
       {/* Display the NFT Image - replace with actual image URL */}
-      <Image source={{ uri: route.params?.nftImageUrl || 'https://placekitten.com/200/200' }} style={styles.nftImage} />
+      <Image source={{ uri: imageURL }} style={styles.nftImage} />
 
       <TouchableOpacity style={styles.claimButton} onPress={() => { navigation.navigate("Explore") }}>
         <Text style={styles.buttonText}>Back to Explore</Text>

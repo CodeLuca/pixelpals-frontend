@@ -7,6 +7,7 @@ const BattleScreen = ({ navigation, route }) => {
   const [movesLeft, setMovesLeft] = useState(4);
   const [feedbackMsg, setFeedbackMsg] = useState('');
   const timerRef = useRef(null);
+  const {imageURL, tokenID} = route.params;
 
   // Attack move details
   const attackMoves = [
@@ -34,7 +35,7 @@ const BattleScreen = ({ navigation, route }) => {
 
       timerRef.current = setTimeout(() => {
         setFeedbackMsg("");
-        navigation.navigate(outcomePage);
+        navigation.navigate(outcomePage,{imageURL: imageURL, tokenID: tokenID});
       }, 1750)
     }
   }, [nftHealth, movesLeft])
@@ -69,7 +70,7 @@ const BattleScreen = ({ navigation, route }) => {
 
       {/* NFT Image and Health Bar */}
       {/* Replace 'nftImageUrl' with actual NFT image URL */}
-      <Image source={{ uri: route.params?.nftImageUrl || 'https://placekitten.com/200/200' }} style={styles.nftImage} />
+      <Image source={{ uri: imageURL }} style={styles.nftImage} />
       <HealthBar health={nftHealth} />
 
       {/* Moves Left Counter */}

@@ -1,16 +1,32 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { wallet_client } from '../web3/wagmi_client';
+import { abis, ca } from '../web3/constants/contants';
+import { useAccount } from 'wagmi';
 
 const YouWonScreen = ({ navigation, route }) => {
+  const {imageURL, tokenID} = route.params;
+  const {address} = useAccount();
+  const mint_nft = async()=>{
+    if(!address){
+      return
+    }
+    await wallet_client.writeContract({
+      address: ca.pixels, 
+      abi: abis.pixels, 
+      functionName: 'mintNFT',
+      args: [tokenID, address]
+    })
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.feedbackText}>You Won and managed to capture a PixelPal!</Text>
 
       {/* Display the NFT Image - replace with actual image URL */}
-      <Image source={{ uri: route.params?.nftImageUrl || 'https://placekitten.com/200/200' }} style={styles.nftImage} />
+      <Image source={{ uri: imageURL }} style={styles.nftImage} />
 
       <TouchableOpacity style={styles.claimButton} onPress={() => {/* Claim logic */ }}>
-        <Text style={styles.buttonText}>Claim Your PixelPal</Text>
+        <Text style={styles.buttonText} onPress={mint_nft}>Claim Your PixelPal</Text>
       </TouchableOpacity>
     </View>
   );

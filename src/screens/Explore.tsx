@@ -71,7 +71,7 @@ const ExploreScreen = ({ navigation }) => {
               <View style={{ flex: 1, padding: 10 }}>
                 <Text style={styles.nftName}>{nft.name}</Text>
                 <Text style={styles.nftRarity}>Rarity: {nft.rarity}</Text>
-                <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("Battle",{})}>
+                <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("Battle",{imageURL: nft.imageUrl, tokenID: nft.id})}>
                   <Text style={styles.buttonText}>Battle</Text>
                 </TouchableOpacity>
               </View>
