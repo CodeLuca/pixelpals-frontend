@@ -22,13 +22,13 @@ const styles = StyleSheet.create({
     maxHeight: "90%",
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#e6f2ff',
+    backgroundColor: '#f8ffde',
   },
   feedbackText: {
     fontFamily: "PixelifySans",
     fontSize: 28,
     fontWeight: 'bold',
-    color: 'darkred',
+    color: 'black',
     marginBottom: 20,
   },
   nftImage: {

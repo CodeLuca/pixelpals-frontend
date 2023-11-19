@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 const YouWonScreen = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.feedbackText}>You Won and managed to capture a PixelPal!</Text>
+      <Text style={styles.feedbackText}>You Won and captued a PixelPal!</Text>
 
       {/* Display the NFT Image - replace with actual image URL */}
       <Image source={{ uri: route.params?.nftImageUrl || 'https://placekitten.com/200/200' }} style={styles.nftImage} />
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#e6f2ff',
+    backgroundColor: '#f8ffde',
   },
   feedbackText: {
     fontSize: 28,
@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
     fontFamily: "PixelifySans",
     marginBottom: 20,
     padding: 10,
+    paddingTop: 0
   },
   nftImage: {
     width: 200,

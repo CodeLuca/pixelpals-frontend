@@ -60,7 +60,7 @@ const Marketplace = ({ walletAddress = '0x123...abc', navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f8ffde',
   },
   header: {
     fontFamily: "PixelifySans",
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    backgroundColor: '#fff',
+    marginBottom: 10
   },
   titleContainer: {
     flex: 1,

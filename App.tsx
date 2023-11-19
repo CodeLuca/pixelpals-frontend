@@ -58,9 +58,27 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   const { address } = useAccount()
+
+  if (!address)
+    return <Wallet />
+
+
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Wallet" component={Wallet} />
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarStyle: {
+          paddingHorizontal: 5,
+          paddingTop: 0,
+          backgroundColor: '#C6FF00',
+          position: 'absolute',
+          borderTopWidth: 0,
+        },
+        headerStyle: {
+          backgroundColor: '#C6FF00',
+        },
+        tabBarActiveTintColor: "#000000"
+      })}
+    >
       {
         address && <Tab.Screen name="Profile" component={ProfileScreen} />
       }
@@ -90,12 +108,26 @@ function App() {
     <WagmiConfig config={wagmiConfig}>
       <Web3Modal />
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={({ route }) => ({
+            tabBarStyle: {
+              paddingHorizontal: 5,
+              paddingTop: 0,
+              backgroundColor: '#C6FF00',
+              position: 'absolute',
+              borderTopWidth: 0,
+            },
+            headerStyle: {
+              backgroundColor: '#C6FF00',
+            },
+            tabBarActiveTintColor: "#000000"
+          })}>
           <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
-          <Stack.Screen name="Battle" component={Battle} options={{ headerShown: true }} />
+          <Stack.Screen name="Wallet" component={Wallet} />
+          <Stack.Screen name="Battle" component={Battle} />
           <Stack.Screen name="ListOnMarketPlace" component={ListOnMarketplace} options={{ title: "", headerBackTitle: "Profile" }} />
-          <Stack.Screen name="YouWon" component={YouWon} options={{ title: "You Won", headerBackTitle: "Profile" }} />
-          <Stack.Screen name="YouLost" component={YouLost} options={{ title: "You Lost", headerBackTitle: "Profile" }} />
+          <Stack.Screen name="YouWon" component={YouWon} options={{ title: "You Won", headerBackVisible: false }} />
+          <Stack.Screen name="YouLost" component={YouLost} options={{ title: "You Lost", headerBackVisible: false }} />
           {/* ... other non-tab screens */}
         </Stack.Navigator>
       </NavigationContainer>

@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#e6f2ff', // Light blue background for a sky-like feel
+    backgroundColor: '#f8ffde', // Light blue background for a sky-like feel
   },
   title: {
     fontSize: 28,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderColor: '#333',
     borderWidth: 2,
-    backgroundColor: 'white', // Consistent blue theme
+    backgroundColor: '#C6FF00', // Consistent blue theme
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 10,

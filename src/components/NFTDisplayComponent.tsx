@@ -14,7 +14,7 @@ const NFTDisplayComponent = ({ name, rarity, imageUrl }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#f8ffde',
     borderRadius: 10,
     alignItems: 'center',
     marginBottom: 15,

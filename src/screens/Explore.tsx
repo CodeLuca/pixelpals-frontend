@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useContractRead } from 'wagmi';
@@ -48,8 +48,13 @@ const ExploreScreen = ({ navigation }) => {
     return <Text>{errorMsg}</Text>;
   }
 
-  if (!location) {
-    return <Text>Loading...</Text>;
+  if (!location || !random_locations) {
+    return (
+      <View style={styles.centeredView}>
+        <ActivityIndicator size="large" color="black" />
+        <Text style={styles.loadingText}>Loading map and PixelPals, hold on this might take a second...</Text>
+      </View>
+    )
   }
 
   return (
@@ -61,7 +66,7 @@ const ExploreScreen = ({ navigation }) => {
       {nfts.map((nft, index) => (
         <Marker
           key={nft.id}
-          coordinate={{ latitude: (Number(random_locations[2 * index])-200) / 100000, longitude: (Number(random_locations[(2 * index) + 1])+50) / 100000 }}
+          coordinate={{ latitude: (Number(random_locations[2 * index]) - 200) / 100000, longitude: (Number(random_locations[(2 * index) + 1]) + 50) / 100000 }}
           title={nft.name}
         >
           <Image source={{ uri: nft.imageUrl }} style={styles.markerImage} />
@@ -71,7 +76,7 @@ const ExploreScreen = ({ navigation }) => {
               <View style={{ flex: 1, padding: 10 }}>
                 <Text style={styles.nftName}>{nft.name}</Text>
                 <Text style={styles.nftRarity}>Rarity: {nft.rarity}</Text>
-                <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("Battle",{})}>
+                <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("Battle", {})}>
                   <Text style={styles.buttonText}>Battle</Text>
                 </TouchableOpacity>
               </View>
@@ -131,6 +136,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f8ffde',
+  },
+  loadingText: {
+    marginTop: 20,
+    fontFamily: "PixelifySans",
+    fontSize: 16,
+    color: '#333',
+  },
+  errorText: {
+    fontSize: 16,
+    color: 'red',
+  }
 });
 
 export default ExploreScreen;

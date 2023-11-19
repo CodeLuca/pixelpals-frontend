@@ -3,29 +3,29 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import NFTDisplayComponent from '../components/NFTDisplayComponent';
 import { useContractWrite } from 'wagmi';
 import { ca, abis } from '../web3/constants/contants';
-import {writeContract, getPublicClient} from '@wagmi/core'
+import { writeContract, getPublicClient } from '@wagmi/core'
 
 const ListOnMarketplace = ({ route, navigation }) => {
   const [listPrice, setListPrice] = useState('');
   const { name, rarity, imageUrl, tokenID } = route.params;
-  const publicClient = getPublicClient({chainId: 84531});
+  const publicClient = getPublicClient({ chainId: 84531 });
 
   //user approves nft to contract first 
-  const { write } = useContractWrite({ 
-    address: ca.myNFT, 
-    abi: abis.myNFT, 
+  const { write } = useContractWrite({
+    address: ca.myNFT,
+    abi: abis.myNFT,
     functionName: 'approve',
     chainId: 84531,
-    args: [ca.pixels,tokenID],
-    onSuccess: async()=> {
-        const {hash} = await writeContract({
-          address: ca.pixels,
-          abi: abis.pixels,
-          functionName: 'list_pixel',
-          args: [tokenID, listPrice],
-          chainId: 84531
-        });
-        await publicClient.waitForTransactionReceipt({hash: hash});
+    args: [ca.pixels, tokenID],
+    onSuccess: async () => {
+      const { hash } = await writeContract({
+        address: ca.pixels,
+        abi: abis.pixels,
+        functionName: 'list_pixel',
+        args: [tokenID, listPrice],
+        chainId: 84531
+      });
+      await publicClient.waitForTransactionReceipt({ hash: hash });
     },
   });
 
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f8ffde',
   },
   title: {
     fontSize: 22,

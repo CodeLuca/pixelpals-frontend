@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
 import { useAccount } from 'wagmi';
+import { useWeb3Modal } from '@web3modal/wagmi-react-native';
 
 const get_nft_data = async (user_add) => {
   const options = { method: 'GET', headers: { accept: 'application/json' } };
@@ -33,7 +34,7 @@ const NFTComponent = ({ name, rarity, imageUrl, tokenID, navigation }) => {
       <Image source={{ uri: imageUrl }} style={styles.nftImage} />
       <Text style={styles.nftName}>{name}</Text>
       <Text style={styles.nftRarity}>Rarity: {rarity}</Text>
-      <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("ListOnMarketPlace",{name: name, rarity: rarity, imageUrl: imageUrl, tokenID: tokenID})}>
+      <TouchableOpacity style={styles.marketplaceButton} onPress={() => navigation.navigate("ListOnMarketPlace", { name: name, rarity: rarity, imageUrl: imageUrl, tokenID: tokenID })}>
         <Text style={styles.buttonText}>List on Market</Text>
       </TouchableOpacity>
     </View>
@@ -43,6 +44,8 @@ const NFTComponent = ({ name, rarity, imageUrl, tokenID, navigation }) => {
 const ProfileScreen = ({ navigation }) => {
   const { address } = useAccount();
   const [nftData, setNftData] = useState(null);
+  const { open } = useWeb3Modal();
+
   useEffect(() => {
     if (address) {
       const fetch_data = async () => {
@@ -56,8 +59,8 @@ const ProfileScreen = ({ navigation }) => {
       }
       fetch_data();
     }
-
   }, [address])
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -65,9 +68,14 @@ const ProfileScreen = ({ navigation }) => {
           <Text style={styles.title}>My PixelPals</Text>
           {address ? <Text style={styles.subtitle}>{address.slice(0, 4) + '...' + address.slice(-4, -1)}</Text> : <></>}
         </View>
-        <TouchableOpacity style={styles.addButton}>
-          <Text style={styles.addButtonText}>Add Funds</Text>
-        </TouchableOpacity>
+        <View style={{}}>
+          <TouchableOpacity style={styles.addButton}>
+            <Text style={styles.addButtonText}>Buy USDT</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.addButton}>
+            <Text style={styles.addButtonText} onPress={() => open()}>Disconnect</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       {nftData && <FlatList
         data={nftData}
@@ -90,14 +98,15 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f8ffde',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    backgroundColor: '#fff',
+    fontFamily: "PixelifySans",
+    marginBottom: 10
   },
   titleContainer: {
     flex: 1,
@@ -105,15 +114,19 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    fontFamily: "PixelifySans",
   },
   subtitle: {
     fontSize: 16,
+    fontFamily: "PixelifySans",
     color: 'gray',
   },
   addButton: {
     backgroundColor: '#C6FF00',
     padding: 10,
     borderRadius: 5,
+    marginBottom: 6,
+    alignItems: "center"
   },
   addButtonText: {
     color: 'black',
@@ -139,11 +152,13 @@ const styles = StyleSheet.create({
   nftName: {
     fontWeight: 'bold',
     fontSize: 16,
+    fontFamily: "PixelifySans",
   },
   nftRarity: {
     fontSize: 14,
     color: 'gray',
     marginBottom: 10,
+    fontFamily: "PixelifySans",
   },
   marketplaceButton: {
     backgroundColor: '#C6FF00',
