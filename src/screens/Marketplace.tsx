@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { get_listings } from '../web3/get_listings_covalant';
 import { useAccount } from 'wagmi';
 import { img_uri } from '../web3/constants/img_url';
@@ -62,6 +62,7 @@ const Marketplace = ({ navigation }) => {
             PixelPals</Text>
         </View>
       </View>
+      {!nftData || nftData.length === 0 && <ActivityIndicator />}
       <FlatList
         data={nftData}
         ListFooterComponent={<View />}

@@ -79,7 +79,7 @@ const ProfileScreen = ({ navigation }) => {
           {address ? <Text style={styles.subtitle}>{address.slice(0, 4) + '...' + address.slice(-4, -1)}</Text> : <></>}
         </View>
         <View style={{}}>
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity style={styles.addButton} onPress={() => navigation.navigate("BuyCrypto")}>
             <Text style={styles.addButtonText}>Buy USDT</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.addButton}>

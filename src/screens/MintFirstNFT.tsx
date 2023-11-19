@@ -4,9 +4,11 @@ import { wallet_client } from '../web3/wagmi_client';
 import { abis, ca } from '../web3/constants/contants'
 import { readContract } from '@wagmi/core';
 import { useAccount, usePublicClient } from 'wagmi';
+import { useNavigation } from '@react-navigation/native';
 import { possible_Tokens } from '../web3/possible_token';
 
-const MintFirstNFT = ({ navigation, route }) => {
+const MintFirstNFT = ({ navigation }) => {
+  // const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const { address } = useAccount();
   const public_client = usePublicClient({ chainId: 84531 })
@@ -28,7 +30,7 @@ const MintFirstNFT = ({ navigation, route }) => {
       })
 
       await public_client.waitForTransactionReceipt({ hash: hash });
-      navigation.navigate("Profile");
+      navigation.navigate("Home");
       setLoading(false);
     } catch (e) {
       navigation.navigate("Explore");
@@ -37,6 +39,7 @@ const MintFirstNFT = ({ navigation, route }) => {
   }
   return (
     <View style={styles.container}>
+      <Image source={{ uri: "https://media.tenor.com/lPo9OU7hx60AAAAC/lilnouns-lil-nouns-dao.gif" }} style={styles.nftImage} />
       <Text style={styles.feedbackText}>Your first PixelPal is on us.</Text>
       <Text style={styles.subtitle}>BAYC members receive a rare PixelPal</Text>
       {/* Display the NFT Image - replace with actual image URL */}

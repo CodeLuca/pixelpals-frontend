@@ -61,6 +61,7 @@ const ExploreScreen = ({ navigation }) => {
     <MapView
       style={styles.map}
       minZoomLevel={16}
+      pitchEnabled={true}
       initialRegion={location}
       showsUserLocation={true}
     >

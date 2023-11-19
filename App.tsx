@@ -25,6 +25,7 @@ import Battle from './src/screens/Battle';
 import YouWon from './src/screens/YouWon';
 import YouLost from './src/screens/YouLost';
 import PayForNFT from './src/screens/PayForNFT';
+import BuyCrypto from './src/screens/BuyCrypto';
 import MintFirstNFT from './src/screens/MintFirstNFT';
 import { isNew } from './src/web3/user_new_or_not';
 import { readContract } from '@wagmi/core';
@@ -61,7 +62,7 @@ createWeb3Modal({
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
+function MyTabs({ navigation }) {
   const [nftCount, setNftCount] = useState(null);
   const [new_user, setNew] = useState(false);
   const [loadingUserData, setLoadingUserData] = useState(true);
@@ -90,7 +91,7 @@ function MyTabs() {
     return <ActivityIndicator />
 
   if (!nftCount && new_user)
-    return <MintFirstNFT />
+    return <MintFirstNFT navigation={navigation} />
 
 
   return (
@@ -178,6 +179,7 @@ function App() {
           <Stack.Screen name="ListOnMarketPlace" component={ListOnMarketplace} options={{ title: "", headerBackTitle: "Profile" }} />
           <Stack.Screen name="YouWon" component={YouWon} options={{ title: "You Won", headerBackVisible: false }} />
           <Stack.Screen name="YouLost" component={YouLost} options={{ title: "You Lost", headerBackVisible: false }} />
+          <Stack.Screen name="BuyCrypto" component={BuyCrypto} options={{ title: "Buy Crypto" }} />
           {/* ... other non-tab screens */}
         </Stack.Navigator>
       </NavigationContainer>
