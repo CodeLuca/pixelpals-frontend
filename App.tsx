@@ -4,7 +4,7 @@ import '@walletconnect/react-native-compat';
 import React, { useCallback, useState } from 'react';
 import { View } from "react-native";
 import { useFonts } from 'expo-font';
-import { StatusBar } from 'expo-status-bar';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useAccount } from 'wagmi';
 import {
   createWeb3Modal,
@@ -24,6 +24,7 @@ import ListOnMarketplace from './src/screens/ListOnMarketplace';
 import Battle from './src/screens/Battle';
 import YouWon from './src/screens/YouWon';
 import YouLost from './src/screens/YouLost';
+import PayForNFT from './src/screens/PayForNFT';
 import MintFirstNFT from './src/screens/MintFirstNFT';
 
 const projectId = process.env.EXPO_PUBLIC_WALLETCONNECT_CLOUD_PROJECT_ID;
@@ -77,19 +78,23 @@ function MyTabs() {
   if (!address)
     return <Wallet />
 
-  if (!nftCount)
-    return <MintFirstNFT />
+  // if (!nftCount)
+  //   return <MintFirstNFT />
 
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
+        tabBarLabelStyle: { fontFamily: "PixelifySans" },
         tabBarStyle: {
           paddingHorizontal: 5,
           paddingTop: 0,
           backgroundColor: '#C6FF00',
           position: 'absolute',
           borderTopWidth: 0,
+        },
+        headerTitleStyle: {
+          fontFamily: "PixelifySans",
         },
         headerStyle: {
           backgroundColor: '#C6FF00',
@@ -98,10 +103,22 @@ function MyTabs() {
       })}
     >
       {
-        address && <Tab.Screen name="Profile" component={ProfileScreen} />
+        address && <Tab.Screen name="Profile" component={ProfileScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => <MaterialIcons name="person" size={27} color={color} />
+          }}
+        />
       }
-      <Tab.Screen name="Explore" component={Explore} />
-      <Tab.Screen name="Marketplace" component={Marketplace} />
+      <Tab.Screen name="Explore" component={Explore}
+        options={{
+          tabBarIcon: ({ color, size }) => <MaterialIcons name="explore" size={27} color={color} />
+        }}
+      />
+      <Tab.Screen name="Marketplace" component={Marketplace}
+        options={{
+          tabBarIcon: ({ color, size }) => <MaterialIcons name="local-convenience-store" size={27} color={color} />
+        }}
+      />
       {/* ... other tab screens */}
     </Tab.Navigator>
   );
@@ -135,6 +152,9 @@ function App() {
               position: 'absolute',
               borderTopWidth: 0,
             },
+            headerTitleStyle: {
+              fontFamily: "PixelifySans",
+            },
             headerStyle: {
               backgroundColor: '#C6FF00',
             },
@@ -143,6 +163,7 @@ function App() {
           <Stack.Screen name="Home" component={MyTabs} options={{ headerShown: false }} />
           <Stack.Screen name="Wallet" component={Wallet} />
           <Stack.Screen name="Battle" component={Battle} />
+          <Stack.Screen name="PayForNFT" component={PayForNFT} options={{ title: "", headerBackTitle: "Market" }} />
           <Stack.Screen name="ListOnMarketPlace" component={ListOnMarketplace} options={{ title: "", headerBackTitle: "Profile" }} />
           <Stack.Screen name="YouWon" component={YouWon} options={{ title: "You Won", headerBackVisible: false }} />
           <Stack.Screen name="YouLost" component={YouLost} options={{ title: "You Lost", headerBackVisible: false }} />

@@ -7,16 +7,17 @@ import { useAccount } from 'wagmi';
 const YouWonScreen = ({ navigation, route }) => {
   const { imageURL, tokenID } = route.params;
   const { address } = useAccount();
+
   const mint_nft = async () => {
     if (!address) {
       return
     }
-    await wallet_client.writeContract({
+    await wallet_client.useWriteContract({
       address: ca.pixels,
       abi: abis.pixels,
       functionName: 'mintNFT',
       args: [tokenID, address]
-    })
+    });
   }
   return (
     <View style={styles.container}>

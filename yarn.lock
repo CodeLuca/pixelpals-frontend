@@ -2960,6 +2960,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-picker/picker@npm:2.4.10":
+  version: 2.4.10
+  resolution: "@react-native-picker/picker@npm:2.4.10"
+  peerDependencies:
+    react: ">=16"
+    react-native: ">=0.57"
+  checksum: 905631e60ffb1aa3f6b378dc03cf2b6736487258f21d74145181185f225937b870ba1cec9f3e6deed1615ecb05e7cfd6b7b33082f169b811eed57ca6c64980d5
+  languageName: node
+  linkType: hard
+
 "@react-native/assets-registry@npm:^0.72.0":
   version: 0.72.0
   resolution: "@react-native/assets-registry@npm:0.72.0"
@@ -12460,6 +12470,7 @@ __metadata:
     "@expo/ngrok": ^4.1.0
     "@react-native-async-storage/async-storage": 1.18.2
     "@react-native-community/netinfo": 9.3.10
+    "@react-native-picker/picker": 2.4.10
     "@react-navigation/bottom-tabs": ^6.5.11
     "@react-navigation/native": ^6.1.9
     "@react-navigation/native-stack": ^6.9.17
