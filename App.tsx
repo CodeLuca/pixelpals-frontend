@@ -65,6 +65,7 @@ const Tab = createBottomTabNavigator();
 function MyTabs({ navigation }) {
   const [nftCount, setNftCount] = useState(null);
   const [new_user, setNew] = useState(false);
+  const [finished, setFinished] = useState(false);
   const [loadingUserData, setLoadingUserData] = useState(true);
 
   const { address } = useAccount({
@@ -90,8 +91,8 @@ function MyTabs({ navigation }) {
   if (loadingUserData)
     return <ActivityIndicator />
 
-  if (!nftCount && new_user)
-    return <MintFirstNFT navigation={navigation} />
+  if (!nftCount && new_user && !finished)
+    return <MintFirstNFT navigation={navigation} setFinished={() => setFinished(true)} />
 
 
   return (

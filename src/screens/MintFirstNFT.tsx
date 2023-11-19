@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { possible_Tokens } from '../web3/possible_token';
 import { is_member } from '../web3/check_ape_membership.js';
 
-const MintFirstNFT = ({ navigation }) => {
+const MintFirstNFT = ({ navigation, setFinished }) => {
   // const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const { address } = useAccount();
@@ -32,8 +32,10 @@ const MintFirstNFT = ({ navigation }) => {
 
       await public_client.waitForTransactionReceipt({ hash: hash });
       navigation.navigate("Home");
+      setFinished();
       setLoading(false);
     } catch (e) {
+      setFinished();
       navigation.navigate("Explore");
       setLoading(false);
     }

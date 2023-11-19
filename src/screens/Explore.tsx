@@ -9,11 +9,11 @@ const ExploreScreen = ({ navigation }) => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [nfts, setNfts] = useState([
-    { id: 2, name: 'Pixel#2', rarity: 'Super-Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/1.png' },
-    { id: 35, name: 'Pixel#35', rarity: 'Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/8.png' },
-    { id: 45, name: 'Pixel#45', rarity: 'Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/9.png' },
-    { id: 75, name: 'Pixel#75', rarity: 'Common', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/11.png' },
-    { id: 85, name: 'Pixel#85', rarity: 'Common', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/12.png' },
+    { id: 4, name: 'Pixel#4', rarity: 'Super-Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/2.png' },
+    { id: 36, name: 'Pixel#36', rarity: 'Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/8.png' },
+    { id: 46, name: 'Pixel#46', rarity: 'Rare', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/9.png' },
+    { id: 76, name: 'Pixel#76', rarity: 'Common', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/11.png' },
+    { id: 86, name: 'Pixel#86', rarity: 'Common', imageUrl: 'https://ipfs.io/ipfs/bafybeifby6t7jclea4gh44x5yna7cnsvt6ruwvrpvqxnpp6xmf4i4uq2qi/12.png' },
   ]);
 
   const { data } = useContractRead({
