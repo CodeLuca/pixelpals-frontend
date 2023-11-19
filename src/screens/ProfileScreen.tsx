@@ -89,6 +89,8 @@ const ProfileScreen = ({ navigation }) => {
       </View>
       {nftData && <FlatList
         data={nftData}
+        ListFooterComponent={<View />}
+        ListFooterComponentStyle={{ height: 100 }}
         renderItem={({ item }) => (
           <NFTComponent
             navigation={navigation}

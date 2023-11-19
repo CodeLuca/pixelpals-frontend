@@ -64,6 +64,8 @@ const Marketplace = ({ navigation }) => {
       </View>
       <FlatList
         data={nftData}
+        ListFooterComponent={<View />}
+        ListFooterComponentStyle={{ height: 100 }}
         renderItem={({ item }) => (
           <NFTComponent
             navigation={navigation}
